@@ -42,6 +42,9 @@ public class Testing {
 		System.out.println("\n");
 		
 		System.out.println("First Pile at position 2: " + p.printCard(p.getEntry(2)));
+		System.out.println("First Pile length: " + p.getLength());
+		System.out.println("Does the first pile contain Ace of Hearts: " + p.contains(new Card(Rank.ACE, Suit.HEART)));
+		System.out.println("\n");
 		
 		Pile a = new Pile();
 		Pile b = new Pile();
