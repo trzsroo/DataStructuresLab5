@@ -18,6 +18,18 @@ public class Testing {
 		System.out.println("Is the pile empty?");
 		System.out.println(p.isEmpty());
 		
+		/*Card newEntry = new Card(Rank.QUEEN, Suit.DIAMOND);
+		Card newEntry1 = new Card(Rank.QUEEN, Suit.CLUB);
+		Card newEntry2 = new Card(Rank.QUEEN, Suit.HEART);
+		p.add(newEntry1);
+		p.add(newEntry);
+		p.add(newEntry2);
+		DoublyLinkedList <Card> pile1 = p.copy();
+		Pile co = new Pile(pile1);
+		co.remove(newEntry);
+		p.printList();
+		co.printList();*/
+		
 		Pile a = new Pile();
 		Pile b = new Pile();
 		
@@ -42,6 +54,7 @@ public class Testing {
 		a.union(b);
 		a.printList();
 		System.out.println("\n");
+		
 		
 		
 		
