@@ -69,7 +69,7 @@ public class Testing {
 		System.out.println("\n");
 		
 		
-		
+		//need to test getLength and contains
 		
 		
 		

@@ -50,8 +50,8 @@ public class DoublyLinkedList <T> implements ListInterface <T>  {
 	}
 	
 	public T getEntry(int i) {
-		
-		return getNodeAt(i).data;
+		Node newN = getNodeAt(i);
+		return newN.getData();
 		
 	}
 	
@@ -62,9 +62,10 @@ public class DoublyLinkedList <T> implements ListInterface <T>  {
 		   if(givenPosition == 0) {
 			   return firstNode;
 		   }
-		   for (int idx = 0; idx < givenPosition; idx ++)
+		   for (int idx = 0; idx < givenPosition; idx ++) {
 		       currentNode = currentNode.getNext();
-		    return currentNode;
+		   }
+		   return currentNode;
 		 }
 
 	
