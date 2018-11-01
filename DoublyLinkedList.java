@@ -76,14 +76,12 @@ public class DoublyLinkedList <T> implements ListInterface <T>  {
 	        firstNode = newNode;
 	    else {
 	        boolean end = false;
-	        Node prev = firstNode.getPrev();
 	        Node nextNode = firstNode.getNext();
 	        Node curr = firstNode;
 	            
 	        while (!end) {
 	            end = (nextNode == null);
 	            if (!end){
-	            	prev = curr;
 	            	curr = nextNode;
 	            	assert (nextNode != null);
 	            	nextNode = nextNode.getNext();
@@ -92,9 +90,6 @@ public class DoublyLinkedList <T> implements ListInterface <T>  {
 	     assert (curr != null);
 	     curr.setNext(newNode);
 	     newNode.setPrev(curr);
-	     if(curr.getPrev().equals(null)) {
-	    	 curr.setPrev(prev);
-	     }
 	   }   
 
 		
@@ -123,7 +118,6 @@ public class DoublyLinkedList <T> implements ListInterface <T>  {
 		          before.setNext(newNode);
 		          newNode.setPrev(before);
 		          newNode.setNext(after);
-		          after.setPrev(newNode);
 		         }
 
 		        else {
@@ -166,7 +160,7 @@ public class DoublyLinkedList <T> implements ListInterface <T>  {
 	             assert (nextNode != null);
 	             dataItem = nextNode.getData();
 	             curr.setNext(nextNode.getNext());
-	             (nextNode.getNext()).setPrev(curr);
+	             (nextNode).setPrev(curr);
 	             break;
 	            } 
 	         }

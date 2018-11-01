@@ -47,8 +47,8 @@ public class Pile implements CardListInterface {
     		}
     	}
     	
-    	for(int k = 0; k < 53; k++) {
-    		this.pile.add(pile[k]);
+    	for(int k = 0; k < 52; k++) {
+    		add(pile[k]);
     	}
     }
     
@@ -58,10 +58,10 @@ public class Pile implements CardListInterface {
     	}
     	int halfed = numberOfEntries/2;
     	for(int i = 0; i < numShuffled + 1; i++) {
-    		for(int j = 0; j < halfed + 1; j++) {
-    			Card curr = pile.getEntry(i);
-    			Card replaced  = pile.replace(numberOfEntries - 1 - i, curr);
-    			pile.replace(i, replaced);
+    		for(int j = 0; j < halfed; j++) {
+    			Card curr = getEntry(j);
+    			Card replaced  = replace(numberOfEntries - 1 - j, curr);
+    			replace(i, replaced);
     		}
     		
     		int r = (int) (Math.random()* 50);
@@ -76,9 +76,9 @@ public class Pile implements CardListInterface {
     			}
     			
     			else {
-    				Card curr = pile.getEntry(ran1);
-        			Card replaced  = pile.replace(ran2, curr);
-        			pile.replace(ran1, replaced);
+    				Card curr = getEntry(ran1);
+        			Card replaced  = replace(ran2, curr);
+        			replace(ran1, replaced);
         			k++;
     			}
     		}
@@ -95,7 +95,7 @@ public class Pile implements CardListInterface {
     @Override
     public void add (Card anEntry) {
       pile.add(anEntry);
-      numberOfEntries ++;
+      numberOfEntries++;
     }
     
     public DoublyLinkedList<Card> copy() {
@@ -125,7 +125,7 @@ public class Pile implements CardListInterface {
     	if(isEmpty()) {
     		throw new IndexOutOfBoundsException();    		
     	}
-    	Card result = pile.remove(numberOfEntries--);
+    	Card result = pile.remove(--numberOfEntries);
     	return result;
     }
 
@@ -206,7 +206,8 @@ public class Pile implements CardListInterface {
     
     public void printList() {
     	for(int i = 0; i < numberOfEntries; i++) {
-    		System.out.println(pile.getEntry(i));
+    		Card curr = pile.getEntry(i);
+    		System.out.println(curr.getRank() + ", " + curr.getSuit());
     	}
     }
     
@@ -216,5 +217,9 @@ public class Pile implements CardListInterface {
     	for(int i = 0; i < 8; i++)
     		hand.add(remove());
     	return hand;
+    }
+    
+    public String printCard(Card c) {
+    	return (c.getRank() + ", " + c.getSuit());
     }
 }
