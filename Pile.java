@@ -1,18 +1,20 @@
 package Lab5;
 
-import java.util.Arrays;
+import Lab5.DoublyLinkedList.Node;
 
 public class Pile implements CardListInterface {
-    private Card[] pile;
+    private DoublyLinkedList <Card> pile;
     private int numberOfEntries;
-    private static final int MAX_CAPACITY = 52;
     
     //constructors
     public Pile () {
-        pile = new Card[MAX_CAPACITY];
+        pile = new DoublyLinkedList <Card> ();
+        numberOfEntries = 0;
     }
     
     public void createDeck() {
+    	Card[] pile = new Card[52];
+    	
     	//creates an array of ranks
     	Rank[] ranks = new Rank[13];
     	ranks[0] = Rank.ACE;
@@ -44,84 +46,98 @@ public class Pile implements CardListInterface {
     			counter++;
     		}
     	}
+    	
+    	for(int k = 0; k < 53; k++) {
+    		this.pile.add(pile[k]);
+    	}
     }
     
     public void shuffle(int numShuffled) {
+    	if(numShuffled <= 0) {
+    		throw new IndexOutOfBoundsException();
+    	}
+    	int halfed = numberOfEntries/2;
+    	for(int i = 0; i < numShuffled + 1; i++) {
+    		for(int j = 0; j < halfed + 1; j++) {
+    			Card curr = pile.getEntry(i);
+    			Card replaced  = pile.replace(numberOfEntries - 1 - i, curr);
+    			pile.replace(i, replaced);
+    		}
+    		
+    		int r = (int) (Math.random()* 50);
+    		int k = 0;
+    		while(k < r) {
+    			int ran1 = (int) (Math.random()* numberOfEntries);
+    			int ran2 = (int) (Math.random()* numberOfEntries);
+    			
+    			if(ran1 == ran2) {
+    				ran1 = (int) (Math.random()* numberOfEntries);
+        			ran2 = (int) (Math.random()* numberOfEntries);
+    			}
+    			
+    			else {
+    				Card curr = pile.getEntry(ran1);
+        			Card replaced  = pile.replace(ran2, curr);
+        			pile.replace(ran1, replaced);
+        			k++;
+    			}
+    		}
+    	}
+    	
+    }
+    
+    //what is union??
+    public void union() {
     	
     }
     
     //method declarations
     @Override
     public void add (Card anEntry) {
-      pile[numberOfEntries]  = anEntry;
+      pile.add(anEntry);
       numberOfEntries ++;
-      ensureCapacity();
+    }
+    
+    public DoublyLinkedList<Card> copy() {
+    	DoublyLinkedList <Card> copy = new DoublyLinkedList<Card>();
+    	@SuppressWarnings("rawtypes")
+		Node curr = pile.getNodeAt(0);
+    	while(curr != null) {
+    		copy.add((Card)curr.getData());
+    		curr.getNext();
+    	}
+    	
+    	return copy;
     }
     
     public Card[] toArray() {
 		Card[] result = (Card[]) new Object[numberOfEntries];
-        for (int idx = 0; idx < numberOfEntries; idx ++)
-            result[idx] = pile[idx];
+		@SuppressWarnings("rawtypes")
+		Node curr = pile.getNodeAt(0);
+        for (int idx = 0; idx < numberOfEntries; idx ++) {
+            result[idx] = (Card) curr.getData();
+            curr = curr.getNext();
+        }
         return result;
     }
-
-    private void ensureCapacity(){
-        int capacity = pile.length - 1; // last index
-        if (numberOfEntries >= capacity) {
-            capacity *= 2;
-            pile = Arrays.copyOf(pile, capacity + 1);       
-        }
-        
-    }
-
-    private void makeRoom (int newPosition){
-        assert (newPosition >= 0 && newPosition <= numberOfEntries);
-        for (int index = numberOfEntries; index > newPosition; index --)
-            pile[index] = pile[index-1];
-    }	
-
-    public void add (int newPosition, Card newEntry) {
-    	makeRoom(newPosition);
-    	pile[newPosition] = newEntry;
-    	numberOfEntries++;
-    	ensureCapacity();
-    }
     
-    private void removeGap(int position) {
-    	for(int i=position; i < numberOfEntries-1; i++) {
-    		pile[i] = pile[i+1];
-    	}
-    	pile[numberOfEntries - 1] = null;
-    }
-    
-    //should this be a void?
-    public Card remove (int givenPosition) {
-    	if(givenPosition < 0 || givenPosition >= numberOfEntries) {
-    		//the exception in Gia's notes, OutOfBoundariesException doesn't exist.. i think
+    public Card remove () {
+    	if(isEmpty()) {
     		throw new IndexOutOfBoundsException();    		
     	}
-    	Card result = pile[givenPosition];
-    	removeGap(givenPosition);
-    	numberOfEntries--;
+    	Card result = pile.remove(numberOfEntries--);
     	return result;
     }
 
     public boolean remove (Card anEntry) {
-    	for(int i=0; i<numberOfEntries-1; i++) {
-    		if(anEntry.equals(pile[i])) {
-    			removeGap(i);
-    			numberOfEntries--;
-    			return true;
-    		}
-    			
-    	}
-		return false;
+    	boolean ans = pile.remove(anEntry);
+    	numberOfEntries--;
+    	return ans;
     }
 
     public void clear() {
-    	for(int i = 0; i < numberOfEntries; i++) {
-			pile[i] = null;
-		}
+    	pile.clear();
+    	numberOfEntries = 0;
     }
 
     /**
@@ -136,8 +152,8 @@ public class Pile implements CardListInterface {
     	if(givenPosition < 0 || givenPosition >= numberOfEntries) {
     		throw new IndexOutOfBoundsException();
     	}
-    	pile[givenPosition] = newEntry;
-    	return newEntry;
+    	Card c = pile.replace(givenPosition, newEntry);
+    	return c;
     };
     
     /**
@@ -151,7 +167,7 @@ public class Pile implements CardListInterface {
     	if(givenPosition < 0 || givenPosition >= numberOfEntries) {
     		throw new IndexOutOfBoundsException();
     	}
-    	return pile[givenPosition];
+    	return pile.getEntry(givenPosition);
     }
     
    /** Retrieves all entries that are in this pile in the order they occur in the pile.
@@ -166,12 +182,7 @@ public class Pile implements CardListInterface {
    /* @return true if the pile contains anEntry; false if not.
    */
     public boolean contains (Card anEntry) {
-    	for(int i=0; i < numberOfEntries-1; i++) {
-    		if(pile[i] == anEntry) {
-    			return true;
-    		}    		
-    	}
-    	return false;
+    	return pile.contains(anEntry);
     }
     
     /**
@@ -195,7 +206,15 @@ public class Pile implements CardListInterface {
     
     public void printList() {
     	for(int i = 0; i < numberOfEntries; i++) {
-    		System.out.println(pile[i]);
+    		System.out.println(pile.getEntry(i));
     	}
+    }
+    
+    //deals 7 cards to person
+    public DoublyLinkedList<Card> deal(){
+    	DoublyLinkedList <Card> hand = new DoublyLinkedList <Card> ();
+    	for(int i = 0; i < 8; i++)
+    		hand.add(remove());
+    	return hand;
     }
 }
