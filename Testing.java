@@ -28,14 +28,20 @@ public class Testing {
 		
 		a.add(c);
 		a.add(d);
+		System.out.println("In first List: ");
 		a.printList();
+		System.out.println("\n");
 		
 		b.add(e);
 		b.add(f);
+		System.out.println("In second List: ");
 		b.printList();
+		System.out.println("\n");
 		
+		System.out.println("In union of first and second List: ");
 		a.union(b);
 		a.printList();
+		System.out.println("\n");
 		
 		
 		

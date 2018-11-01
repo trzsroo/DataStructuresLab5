@@ -12,6 +12,11 @@ public class Pile implements CardListInterface {
         numberOfEntries = 0;
     }
     
+    public Pile(DoublyLinkedList <Card> p) {
+    	pile = p;
+    	numberOfEntries = p.getLength();
+    }
+    
     public void createDeck() {
     	Card[] pile = new Card[52];
     	
@@ -90,7 +95,7 @@ public class Pile implements CardListInterface {
     public void union(Pile other) {
     	Card[] otherArray = other.toArray();
     	for(int i = 0; i < otherArray.length - 1; i++) {
-    		pile.add(otherArray[i]);
+    		add(otherArray[i]);
     		other.remove(otherArray[i]);
     	}
     	
