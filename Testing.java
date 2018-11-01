@@ -21,6 +21,7 @@ public class Testing {
 		Card newEntry = new Card(Rank.QUEEN, Suit.DIAMOND);
 		Card newEntry1 = new Card(Rank.QUEEN, Suit.CLUB);
 		Card newEntry2 = new Card(Rank.QUEEN, Suit.HEART);
+		Card newEntry3 = new Card(Rank.QUEEN, Suit.SPADE);
 		p.add(newEntry1);
 		p.add(newEntry);
 		p.add(newEntry2);
@@ -34,6 +35,13 @@ public class Testing {
 		System.out.println("In copy of first list with Queen of Diamonds removed: ");
 		co.printList();
 		System.out.println("\n");
+		
+		p.replace(1, newEntry3);
+		System.out.println("In first list wth Queen of Diamonds switched with Queen of Spades: ");
+		p.printList();
+		System.out.println("\n");
+		
+		System.out.println("First Pile at position 2: " + p.printCard(p.getEntry(2)));
 		
 		Pile a = new Pile();
 		Pile b = new Pile();
