@@ -114,7 +114,7 @@ public class Pile implements CardListInterface {
 		Node curr = pile.getNodeAt(0);
     	while(curr != null) {
     		copy.add((Card)curr.getData());
-    		curr.getNext();
+    		curr = curr.getNext();
     	}
     	
     	return copy;

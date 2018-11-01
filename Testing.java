@@ -18,7 +18,7 @@ public class Testing {
 		System.out.println("Is the pile empty?");
 		System.out.println(p.isEmpty());
 		
-		/*Card newEntry = new Card(Rank.QUEEN, Suit.DIAMOND);
+		Card newEntry = new Card(Rank.QUEEN, Suit.DIAMOND);
 		Card newEntry1 = new Card(Rank.QUEEN, Suit.CLUB);
 		Card newEntry2 = new Card(Rank.QUEEN, Suit.HEART);
 		p.add(newEntry1);
@@ -27,8 +27,13 @@ public class Testing {
 		DoublyLinkedList <Card> pile1 = p.copy();
 		Pile co = new Pile(pile1);
 		co.remove(newEntry);
+		System.out.println("\n");
+		System.out.println("In first list: ");
 		p.printList();
-		co.printList();*/
+		System.out.println("\n");
+		System.out.println("In copy of first list with Queen of Diamonds removed: ");
+		co.printList();
+		System.out.println("\n");
 		
 		Pile a = new Pile();
 		Pile b = new Pile();
@@ -40,13 +45,13 @@ public class Testing {
 		
 		a.add(c);
 		a.add(d);
-		System.out.println("In first List: ");
+		System.out.println("In first list: ");
 		a.printList();
 		System.out.println("\n");
 		
 		b.add(e);
 		b.add(f);
-		System.out.println("In second List: ");
+		System.out.println("In second list: ");
 		b.printList();
 		System.out.println("\n");
 		
