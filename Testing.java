@@ -18,6 +18,29 @@ public class Testing {
 		System.out.println("Is the pile empty?");
 		System.out.println(p.isEmpty());
 		
+		Pile a = new Pile();
+		Pile b = new Pile();
+		
+		Card c = new Card(Rank.ACE, Suit.CLUB);
+		Card d = new Card(Rank.ACE, Suit.DIAMOND);
+		Card e = new Card(Rank.ACE, Suit.HEART);
+		Card f = new Card(Rank.ACE, Suit.SPADE);
+		
+		a.add(c);
+		a.add(d);
+		a.printList();
+		
+		b.add(e);
+		b.add(f);
+		b.printList();
+		
+		a.union(b);
+		a.printList();
+		
+		
+		
+		
+		
 
 	}
 

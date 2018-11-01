@@ -87,7 +87,12 @@ public class Pile implements CardListInterface {
     }
     
     //what is union??
-    public void union() {
+    public void union(Pile other) {
+    	Card[] otherArray = other.toArray();
+    	for(int i = 0; i < otherArray.length - 1; i++) {
+    		pile.add(otherArray[i]);
+    		other.remove(otherArray[i]);
+    	}
     	
     }
     
@@ -111,7 +116,7 @@ public class Pile implements CardListInterface {
     }
     
     public Card[] toArray() {
-		Card[] result = (Card[]) new Object[numberOfEntries];
+		Card[] result = new Card[numberOfEntries];
 		@SuppressWarnings("rawtypes")
 		Node curr = pile.getNodeAt(0);
         for (int idx = 0; idx < numberOfEntries; idx ++) {
